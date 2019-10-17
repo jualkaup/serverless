@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "WEBSITE_SLOT_NAME": "Production",
+    "FUNCTIONS_EXTENSION_VERSION": "~2",
+    "ScmType": "GitHub",
+    "WEBSITE_AUTH_ENABLED": "False",
+    "APPINSIGHTS_INSTRUMENTATIONKEY": "2593349d-9c85-4ead-8485-8e422bf11659",
+    "WEBSITE_NODE_DEFAULT_VERSION": "10.14.1",
+    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=jualkaupserverlb69a;AccountKey=MWM3ULNmAz09Qt8w+vZ65syQckeyjpQm2HEx/s5PfkT70hBN2LfpMO9EaqXOvmzP1QbUn17teNoJ8ZySxd6eiA==",
+    "WEBSITE_CONTENTSHARE": "jualkaup-serverlessb69a",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "WEBSITE_SITE_NAME": "jualkaup-serverless",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=jualkaupserverlb69a;AccountKey=MWM3ULNmAz09Qt8w+vZ65syQckeyjpQm2HEx/s5PfkT70hBN2LfpMO9EaqXOvmzP1QbUn17teNoJ8ZySxd6eiA=="
+  }
+}
