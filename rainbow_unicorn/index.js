@@ -1,67 +1,36 @@
-var http = require('http');
-var parseString = require('xml2js').parseString;
+const parseString = require('xml2js').parseString;
+const fetch = require("node-fetch");
 
+module.exports = async function (context) {
+    var response = {};
+    var option = context.bindingData.option;
 
-module.exports = function (context) {
-    
-    var data = {};
-    
-    var weatherOptions = {
-        host: 'wxdata.weather.com',
-        path: '/wxdata/weather/local/FIXX0025?cc&dayf=1&unit=m&locale=fi_FI'
-    };
-    var foodOptions = {
-        host: 'www.semma.fi',
-        path: '/modules/json/json/Index?costNumber=1408&language=fi'
-    };
-    
-    var weatherReq = http.request(weatherOptions, (res) => {
-        var body = "";
-
-        res.on("data", (chunk) => {
-            body += chunk;
+    if (option === "food" || option === undefined) {
+        await fetchFood().then(data => {
+            response['food'] = data;
         });
+    }
 
-        res.on("end", () => {
-            parseString(body, function (err, result) {
-                data['weather'] = JSON.stringify(result);
-            });
-         });
-    }).on("error", (error) => {
-        context.log('error');
-        context.res = {
-            status: 500,
-            body: error
-        };
-        context.done();
-    });
-
-    weatherReq.end();
-
-    var foodReq = http.request(foodOptions, (res) => {
-        var body = "";
-
-        res.on("data", (chunk) => {
-            body += chunk;
+    if (option === "weather" || option === undefined) {
+        await fetchWeather(context).then(data => {
+            response['weather'] = data;
         });
+    }
 
-        res.on("end", () => {
-            data['food'] = body;
-            context.res = {
-            status: 200,    
-            body: data
-        }; 
-    context.done();
-         });
-    }).on("error", (error) => {
-        context.log('error');
-        context.res = {
-            status: 500,
-            body: error
-        };
-        context.done();
-    });
-
-    foodReq.end();
+    return response;
 }
-    
+
+async function fetchWeather() {
+    var response = await fetch('https://wxdata.weather.com/wxdata/weather/local/FIXX0025?cc&dayf=7&unit=m&locale=en_GB');
+    var data = await response.text();
+    parseString(data, function (err, result) {
+        data = result;
+    });
+    return data;
+}
+
+async function fetchFood() {
+    var response = await fetch('https://www.semma.fi/modules/json/json/Index?costNumber=1408&language=en');
+    var data = await response.json();
+    return data;
+}
